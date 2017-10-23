@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
+import { Utils } from '../_shared/common-functions.utils';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -7,7 +8,8 @@ export class AuthGuard implements CanActivate {
     constructor(private router: Router) { }
 
     canActivate() {
-        if (localStorage.getItem('currentUser')) {
+        let auctionId = Utils.getVirtualDir();
+        if (localStorage.getItem(auctionId)) {
             // logged in so return true
             return true;
         }

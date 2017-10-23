@@ -5,21 +5,23 @@ import 'rxjs/add/operator/map'
 
 import { AuthenticationService } from './index';
 import { User } from '../_models/index';
+import { Utils } from '../_shared/common-functions.utils';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class UserService {
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private authenticationService: AuthenticationService) {
     }
 
     getUsers(): Observable<User[]> {
         // add authorization header with jwt token
-        let headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-        let options = new RequestOptions({ headers: headers });
+
+
+        let auctionId = Utils.getVirtualDir();
 
         // get users from api
-        return this.http.get('/api/users', options)
-            .map((response: Response) => response.json());
+        return this.http.get<User[]>(`http://localhost/Spazioaste.Webapi/${auctionId}/Utenti/HelloAdmin`);
     }
 }
